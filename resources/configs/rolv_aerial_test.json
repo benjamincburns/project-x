@@ -1,16 +1,16 @@
 {
-  "device": "cuda:0",
+  "device": "cuda:4",
   "seed": 123,
   "env_id": "RocketLeague-v0",
   "custom_envs": [
     "rlgym_distrib_rl_wrapper"
   ],
-  "agent": {"type" : "marl"},
+  "agent": {"type" : "pg"},
   "log_to_wandb": true,
   "wandb": {
     "project": "idle_time",
     "group": "reward_experiments",
-    "name": "VelBallGoal, Goal, and Team Goal - reject no reward trajectories - 2"
+    "name": "Aerial Reward Test 8"
   },
 
   "value_estimator":
@@ -141,7 +141,7 @@
   "policy_gradient_optimizer":
   {
     "type": "torch adam",
-    "step_size": 1e-4
+    "lr": 1e-4
   },
 
   // not used at the moment
@@ -165,7 +165,7 @@
     "batch_size": 100000, // no minibatches, so must fit in VRAM
     "clip_range": 0.2,
     "gae_lambda": 0.95, // should be slightly smaller than gamma
-    "entropy_coef": 0.001,
+    "entropy_coef": 0.005,
     "max_timesteps": 1e16,
     "eps_per_eval": 50,
     /**
@@ -201,11 +201,12 @@
 
   "env_kwargs": {
     "tick_skip": 8,
-    "team_size": [1,2,3,4],
+    "team_size": 1,
     "game_speed": 100,
-    "spawn_opponents": true,
+    "spawn_opponents": false,
     "action_parser": "necto",
-    "obs_builder": "padded_default_with_timeouts",
+    "obs_builder": "advanced",
+    "boost_consumption": 0,
     "state_setter": {
       "weighted_sample": {
         "state_setters": [
@@ -213,25 +214,25 @@
           "random"
         ],
         "weights": [
-          1.0,
-          0.0
+          0.5,
+          0.5
         ]
       }
     },
     "reward_function": {
       "combined": {
         "rewards": [
-          "velocity_ball_to_goal",
+          "velocity_player_to_ball",
           {
-            "event": {
-              "goal": 200,
-              "team_goal": 400
+            "rolv_aerial": {
+              "tick_skip": 8,
+              "scale_by_upness": true
             }
           }
         ],
         "weights": [
           1.0,
-          1.0
+          1000.0
         ]
       }
     },
@@ -242,7 +243,8 @@
       "no_touch_timeout": {
         "max_steps": 450 // 5 minutes @ 15 steps/sec
       },
-      "goal_scored": {}
+      "goal_scored": {},
+      "aerial_task": {}
     }
   },
 

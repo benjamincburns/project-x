@@ -5,16 +5,21 @@ import numpy as np
 np.random.seed(0)
 import torch
 torch.manual_seed(0)
+import logging
+logging.basicConfig(
+    format="%(asctime)s %(levelname)s - %(processName)s:%(process)d - %(message)s",
+    level=logging.INFO
+)
 
-from distrib_rl.PolicyOptimization.DistribPolicyGradients import Server
-from distrib_rl.Experiments import ExperimentManager
+from distrib_rl.policy_optimization.distrib_policy_gradients import Server
+from distrib_rl.experiments import ExperimentManager
 import traceback
 
 from project_x.register_customizations import register_customizations
 
 def main():
     if len(sys.argv) == 1:
-        experiment_path = "resources/experiments/test_experiments/walker2d_config.json"
+        experiment_path = "resources/experiments/test_experiments/project_x_mvp.json"
     if len(sys.argv) == 2:
         experiment_path = sys.argv[1]
         if not os.path.exists(experiment_path):

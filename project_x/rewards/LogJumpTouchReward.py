@@ -1,6 +1,6 @@
-from rlgym.utils import RewardFunction
-from rlgym.utils.gamestates import PlayerData, GameState
-from rlgym.utils.common_values import CEILING_Z
+from rlgym_sim.utils import RewardFunction
+from rlgym_sim.utils.gamestates import PlayerData, GameState
+from rlgym_sim.utils.common_values import CEILING_Z
 
 import numpy as np
 

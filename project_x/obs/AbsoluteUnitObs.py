@@ -1,12 +1,12 @@
 import numpy as np
 from typing import Any, List
-from rlgym.utils import common_values
-from rlgym.utils.gamestates import PlayerData, GameState
+from rlgym_sim.utils import common_values
+from rlgym_sim.utils.gamestates import PlayerData, GameState
 from .DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
 # (if __main__)
 # from DefaultWithTimeoutsObsBuilder import DefaultWithTimeoutsObsBuilder
 
-from rlgym.utils.common_values import BLUE_GOAL_BACK, ORANGE_GOAL_BACK
+from rlgym_sim.utils.common_values import BLUE_GOAL_BACK, ORANGE_GOAL_BACK
 
 
 class AbsoluteUnitObs(DefaultWithTimeoutsObsBuilder):

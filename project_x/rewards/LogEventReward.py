@@ -1,5 +1,5 @@
-from rlgym.utils.gamestates import GameState, PlayerData
-from rlgym.utils.reward_functions.common_rewards.misc_rewards import EventReward
+from rlgym_sim.utils.gamestates import GameState, PlayerData
+from rlgym_sim.utils.reward_functions.common_rewards.misc_rewards import EventReward
 import numpy as np
 
 

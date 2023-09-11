@@ -1,6 +1,6 @@
 {
-  "experiment_name" : "Rocket League Test",
-  "config_file" : "project_x_mvp.json",
+  "experiment_name" : "aerial_aest_8",
+  "config_file" : "rolv_aerial_test.json",
   "num_trials_per_adjustment" : 1,
   "steps_per_save" : 100,
 

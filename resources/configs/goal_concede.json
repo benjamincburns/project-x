@@ -8,9 +8,9 @@
   "agent": {"type" : "marl"},
   "log_to_wandb": true,
   "wandb": {
-    "project": "idle_time",
-    "group": "reward_experiments",
-    "name": "VelBallGoal, Goal, and Team Goal - reject no reward trajectories - 2"
+    "project": "pizza-passion",
+    "group": "because-why-not",
+    "name": "send-it-750K"
   },
 
   "value_estimator":
@@ -29,42 +29,28 @@
       "ff1":
       {
         "type" : "ff",
-        "num_nodes" : 512,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff2":
       {
         "type" : "ff",
-        "num_nodes" : 512,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff3":
       {
         "type" : "ff",
-        "num_nodes" : 512,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff4":
       {
         "type" : "ff",
-        "num_nodes" : 512,
-        "activation_function" : "selu",
-        "extra" : null
-      },
-      "ff5":
-      {
-        "type" : "ff",
-        "num_nodes" : 512,
-        "activation_function" : "selu",
-        "extra" : null
-      },
-      "ff6":
-      {
-        "type" : "ff",
-        "num_nodes" : 512,
+        "num_nodes" : 256,
         "activation_function" : "selu",
         "extra" : null
       },
@@ -89,42 +75,28 @@
       "ff1":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff2":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff3":
       {
         "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
       "ff4":
       {
         "type" : "ff",
-        "num_nodes" : 256,
-        "activation_function" : "selu",
-        "extra" : null
-      },
-      "ff5":
-      {
-        "type" : "ff",
-        "num_nodes" : 256,
-        "activation_function" : "selu",
-        "extra" : null
-      },
-      "ff6":
-      {
-        "type" : "ff",
-        "num_nodes" : 256,
+        "num_nodes" : 128,
         "activation_function" : "selu",
         "extra" : null
       },
@@ -162,18 +134,18 @@
     "type": "pg",
     "gamma": 0.995,
     "max_kl": 1.0,
-    "batch_size": 100000, // no minibatches, so must fit in VRAM
+    "batch_size": 750000, // no minibatches, so must fit in VRAM
     "clip_range": 0.2,
     "gae_lambda": 0.95, // should be slightly smaller than gamma
-    "entropy_coef": 0.001,
+    "entropy_coef": 0.005,
     "max_timesteps": 1e16,
     "eps_per_eval": 50,
     /**
      * Percentage of returns that needs to be "fresh" prior to an update
      * occurring
      */
-    "new_returns_proportion": 1
-    // "timesteps_per_update": 100000
+    //"new_returns_proportion": 0
+    "timesteps_per_update": 750000
   },
 
   "adaptive_omega":
@@ -187,7 +159,7 @@
 
   "experience_replay":
   {
-    "max_buffer_size": 800000
+    "max_buffer_size": 750000
   },
 
   "strategy":
@@ -201,38 +173,23 @@
 
   "env_kwargs": {
     "tick_skip": 8,
-    "team_size": [1,2,3,4],
+    "team_size": 2,
     "game_speed": 100,
     "spawn_opponents": true,
     "action_parser": "necto",
-    "obs_builder": "padded_default_with_timeouts",
-    "state_setter": {
-      "weighted_sample": {
-        "state_setters": [
-          "default",
-          "random"
-        ],
-        "weights": [
-          1.0,
-          0.0
-        ]
-      }
-    },
+    //"obs_builder": "absolute_unit_obs",
+    "obs_builder": "default_with_timeouts",
+    "state_setter": "random",
     "reward_function": {
-      "combined": {
-        "rewards": [
-          "velocity_ball_to_goal",
-          {
-            "event": {
-              "goal": 200,
-              "team_goal": 400
-            }
-          }
-        ],
-        "weights": [
-          1.0,
-          1.0
-        ]
+      "event": {
+        "goal": 0.5,
+        "concede": -1.0,
+        "team_goal": 0.5,
+        "touch": 0.0,
+        "shot": 0.0,
+        "save": 0.0,
+        "demo": 0.0,
+        "boost_pickup": 0.0
       }
     },
     "terminal_conditions": {
@@ -250,7 +207,7 @@
   {
     "clip_target": 0.1,
     "rate": 1.1,
-    "max_lr": 1,
+    "max_lr": 0.05,
     "min_lr": 1e-7
   }*/
 }
