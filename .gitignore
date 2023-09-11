@@ -4,3 +4,6 @@ __pycache__
 *.pyc
 .vscode
 .idea
+collision_meshes/
+*.log
+.python-version
